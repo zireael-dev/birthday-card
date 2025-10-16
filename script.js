@@ -1,12 +1,7 @@
 // =================================================================
-// BAGIAN 1: INISIALISASI & DEKLARASI ELEMEN
+// BAGIAN 1: DEKLARASI ELEMEN
+// (AOS.init() DIHAPUS DARI SINI)
 // =================================================================
-
-// Inisialisasi library Animate On Scroll (AOS)
-AOS.init({
-    duration: 1000, // Durasi animasi dalam milidetik
-    once: true,     // Animasi hanya berjalan sekali
-});
 
 // Ambil semua elemen dari HTML yang akan kita gunakan
 const playButton = document.getElementById('play-button');
@@ -17,43 +12,57 @@ const addToCalendarBtn = document.getElementById('add-to-calendar-btn');
 
 
 // =================================================================
-// BAGIAN 2: EVENT LISTENERS (FUNGSI UNTUH TOMBOL)
+// BAGIAN 2: EVENT LISTENERS (FUNGSI UNTUK TOMBOL)
 // =================================================================
 
 // --- Event Listener untuk Tombol Play Musik & Layar Pembuka ---
 if (playButton) {
     playButton.addEventListener('click', function() {
+        // Putar musiknya
         if (backgroundMusic) {
             backgroundMusic.play();
         }
+        
+        // Sembunyikan layar pembuka dengan efek fade-out
         if (splashScreen) {
             splashScreen.classList.add('hidden');
         }
+        
+        // Tampilkan konten utama setelah transisi selesai
         if (mainContent) {
             setTimeout(() => {
                 mainContent.style.display = 'block';
-            }, 1000);
+
+                // ================================================
+                // KUNCI PERBAIKANNYA ADA DI SINI!
+                // Inisialisasi AOS HANYA SETELAH konten terlihat
+                // ================================================
+                AOS.init({
+                    duration: 1000,
+                    once: true,
+                    // Tambahan: pastikan AOS tidak mulai terlalu cepat
+                    offset: 50 
+                });
+
+            }, 1000); // Waktu ini harus cocok dengan durasi transisi di CSS
         }
     });
 }
 
 
 // --- Event Listener untuk Tombol "Set Pengingat" Kalender ---
-// === BAGIAN INI YANG DIUBAH TOTAL ===
 if (addToCalendarBtn) {
     addToCalendarBtn.addEventListener('click', function() {
-        // 1. Tentukan detail acara (sama seperti sebelumnya)
+        // 1. Tentukan detail acara
         const event = {
             title: "Birthday Surprise Lunch! ❤️",
             description: "Jemput di meeting point yang sudah ditentukan. Jangan telat ya!",
             location: "Lokasi jemputnya rahasia, lihat di link sebelumnya ya!",
-            // Format waktu UTC tetap sama
-            startTime: "20251017T053000Z", // Jumat, 17 Oktober 2025, jam 12:30 WIB
+            startTime: "20251017T053000Z",
             endTime: "20251017T063000Z"
         };
 
-        // 2. Format waktu untuk URL Google Calendar
-        // Formatnya adalah: YYYYMMDDTHHMMSSZ/YYYYMMDDTHHMMSSZ
+        // 2. Format waktu untuk URL
         const calendarDates = `${event.startTime.replace(/-|:|\.\d+/g, '')}/${event.endTime.replace(/-|:|\.\d+/g, '')}`;
 
         // 3. Buat URL Google Calendar
