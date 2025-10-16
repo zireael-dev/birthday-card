@@ -3,16 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khusus Untuk Kamu Sayang!</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Khusus Untuk Kamu!</title>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <section class="page" id="hero">
-        <h1>Hey, Kamu yang lagi ulang tahun!</h1>
-        <p>Scroll ke bawah pelan-pelan ya...</p>
-        <div class="scroll-down-arrow">↓</div>
+    <div id="splash-screen" class="splash-screen">
+        <h2>Ada Sesuatu Untukmu... ❤️</h2>
+        <button id="play-button">Klik di Sini!</button>
+    </div>
+
+    <audio id="background-music" loop>
+        <source src="lagu.mp3" type="audio/mpeg">
+        Browser kamu tidak mendukung elemen audio.
+    </audio>
+
+    <div id="main-content" class="main-content">
+        
+        <section class="page" id="hero">
+            <h1>Hey, Kamu yang lagi ulang tahun!</h1>
+            <p>Scroll ke bawah pelan-pelan ya...</p>
+            <div class="scroll-down-arrow">↓</div>
+        </section>
+
+        <section class="page" id="compliments">
+            </section>
+
+        <section class="page" id="birthday-card">
+            </section>
+        
+        <section class="page" id="invitation">
+            </section>
+        
+    </div> <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+    
     </section>
 
     <section class="page" id="compliments">
