@@ -17,75 +17,49 @@ const addToCalendarBtn = document.getElementById('add-to-calendar-btn');
 
 
 // =================================================================
-// BAGIAN 2: EVENT LISTENERS (FUNGSI UNTUK TOMBOL)
+// BAGIAN 2: EVENT LISTENERS (FUNGSI UNTUH TOMBOL)
 // =================================================================
 
 // --- Event Listener untuk Tombol Play Musik & Layar Pembuka ---
 if (playButton) {
     playButton.addEventListener('click', function() {
-        // Putar musiknya
         if (backgroundMusic) {
             backgroundMusic.play();
         }
-        
-        // Sembunyikan layar pembuka dengan efek fade-out
         if (splashScreen) {
             splashScreen.classList.add('hidden');
         }
-        
-        // Tampilkan konten utama setelah transisi selesai
         if (mainContent) {
             setTimeout(() => {
                 mainContent.style.display = 'block';
-            }, 1000); // 1000ms = 1 detik, sesuaikan dengan durasi transisi di CSS
+            }, 1000);
         }
     });
 }
 
 
 // --- Event Listener untuk Tombol "Set Pengingat" Kalender ---
+// === BAGIAN INI YANG DIUBAH TOTAL ===
 if (addToCalendarBtn) {
     addToCalendarBtn.addEventListener('click', function() {
-        // Detail Acara (SESUAIKAN INI!)
+        // 1. Tentukan detail acara (sama seperti sebelumnya)
         const event = {
             title: "Birthday Surprise Lunch! ❤️",
             description: "Jemput di meeting point yang sudah ditentukan. Jangan telat ya!",
-            location: "Lihat di link yang tadi ya, Sayang!",
-            // Format Waktu: YYYYMMDDTHHMMSSZ (Waktu UTC/GMT)
-            // Waktu WIB adalah UTC+7. Jadi, 12:30 WIB = 05:30 UTC
+            location: "Lokasi jemputnya rahasia, lihat di link sebelumnya ya!",
+            // Format waktu UTC tetap sama
             startTime: "20251017T053000Z", // Jumat, 17 Oktober 2025, jam 12:30 WIB
-            endTime: "20251017T063000Z"   // Dibuat durasi 1 jam
+            endTime: "20251017T063000Z"
         };
 
-        // Fungsi internal untuk membuat file .ics (kalender)
-        function createIcsFile() {
-            return `BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-SUMMARY:${event.title}
-DESCRIPTION:${event.description}
-LOCATION:${event.location}
-DTSTART:${event.startTime}
-DTEND:${event.endTime}
-BEGIN:VALARM
-TRIGGER:-PT15M
-ACTION:DISPLAY
-DESCRIPTION:Reminder
-END:VALARM
-END:VEVENT
-END:VCALENDAR`;
-        }
+        // 2. Format waktu untuk URL Google Calendar
+        // Formatnya adalah: YYYYMMDDTHHMMSSZ/YYYYMMDDTHHMMSSZ
+        const calendarDates = `${event.startTime.replace(/-|:|\.\d+/g, '')}/${event.endTime.replace(/-|:|\.\d+/g, '')}`;
 
-        // Membuat file dan memicunya untuk di-download
-        const icsContent = createIcsFile();
-        const blob = new Blob([icsContent], { type: 'text/calendar' });
-        const url = URL.createObjectURL(blob);
+        // 3. Buat URL Google Calendar
+        const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${calendarDates}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
 
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'kejutan-ulang-tahun.ics'; // Nama file yang akan di-download
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        // 4. Buka URL di tab baru
+        window.open(googleCalendarUrl, '_blank');
     });
 }
