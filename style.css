@@ -1,0 +1,99 @@
+/* Import font dari Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fde2e4; /* Warna latar belakang lembut */
+    color: #333;
+    scroll-snap-type: y mandatory; /* Membuat scroll terasa per halaman */
+    overflow-y: scroll;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh; /* Tinggi setiap section adalah 100% tinggi layar */
+    scroll-snap-align: start; /* Titik "snap" ada di awal section */
+    padding: 0 2rem;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Background berbeda untuk setiap section */
+#hero { background-color: #fde2e4; }
+#compliments { background-color: #fad2e1; }
+#birthday-card { background-color: #e2ece9; }
+#invitation { background-color: #bee1e6; }
+
+h1 {
+    font-size: 2.5rem;
+    color: #d6336c;
+}
+
+h2 {
+    font-size: 2rem;
+    color: #8338ec;
+}
+
+p {
+    font-size: 1.2rem;
+    max-width: 600px;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    margin-bottom: 20px;
+}
+
+.invitation-details {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.map-link, #add-to-calendar-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #ff006e;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.map-link:hover, #add-to-calendar-btn:hover {
+    transform: scale(1.05);
+}
+
+.scroll-down-arrow {
+    font-size: 3rem;
+    margin-top: 20px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}

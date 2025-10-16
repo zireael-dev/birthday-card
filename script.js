@@ -1,0 +1,50 @@
+// Inisialisasi library AOS (Animate On Scroll)
+AOS.init({
+    duration: 1000, // Durasi animasi dalam milidetik
+    once: true, // Animasi hanya berjalan sekali
+});
+
+// Logika untuk tombol "Set Pengingat"
+document.getElementById('add-to-calendar-btn').addEventListener('click', function() {
+    // Detail Acara (SESUAIKAN INI!)
+    const event = {
+        title: "Birthday Surprise Lunch! ❤️",
+        description: "Jemput di meeting point yang sudah ditentukan. Jangan telat ya!",
+        location: "Lihat di link yang tadi ya, Sayang!",
+        // Format Waktu: YYYYMMDDTHHMMSSZ (Waktu UTC/GMT)
+        // Contoh: 18 Oktober 2025 jam 19:00 WIB itu sama dengan jam 12:00 UTC
+        startTime: "20251017T053000Z",
+        endTime: "20251017T063000Z" // Dibuat durasi 1 jam
+    };
+
+    // Fungsi untuk membuat file .ics (kalender)
+    function createIcsFile() {
+        return `BEGIN:VCALENDAR
+        VERSION:2.0
+        BEGIN:VEVENT
+        SUMMARY:${event.title}
+        DESCRIPTION:${event.description}
+        LOCATION:${event.location}
+        DTSTART:${event.startTime}
+        DTEND:${event.endTime}
+        BEGIN:VALARM
+        TRIGGER:-PT15M
+        ACTION:DISPLAY
+        DESCRIPTION:Reminder
+        END:VALARM
+        END:VEVENT
+        END:VCALENDAR`;
+    }
+
+    // Membuat file dan men-downloadnya
+    const icsContent = createIcsFile();
+    const blob = new Blob([icsContent], { type: 'text/calendar' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'kejutan-ulang-tahun.ics'; // Nama file yang akan di-download
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+});
