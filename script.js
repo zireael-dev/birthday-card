@@ -48,3 +48,27 @@ document.getElementById('add-to-calendar-btn').addEventListener('click', functio
     a.click();
     document.body.removeChild(a);
 });
+
+/* == JAVASCRIPT BARU UNTUK MUSIK == */
+/* (Tambahkan ini di akhir file script.js) */
+
+// Ambil elemen-elemen yang dibutuhkan dari HTML
+const playButton = document.getElementById('play-button');
+const splashScreen = document.getElementById('splash-screen');
+const mainContent = document.getElementById('main-content');
+const backgroundMusic = document.getElementById('background-music');
+
+// Tambahkan event listener ke tombol play
+playButton.addEventListener('click', function() {
+    // Putar musiknya
+    backgroundMusic.play();
+    
+    // Tambahkan class 'hidden' ke splash screen untuk memulai transisi fade-out
+    splashScreen.classList.add('hidden');
+    
+    // Tampilkan konten utama setelah transisi selesai
+    setTimeout(() => {
+        // Tampilkan konten utama yang tadinya tersembunyi
+        mainContent.style.display = 'block';
+    }, 1000); // 1000ms = 1 detik, harus sama dengan durasi transisi di CSS
+});
